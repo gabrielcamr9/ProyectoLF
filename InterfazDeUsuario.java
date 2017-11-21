@@ -13,19 +13,24 @@ public class InterfazDeUsuario {
 
     //Este método se encarga de manejar la lógica detrás de la interfaz de usuario
     public void start() {
+        outerloop:
         while (true) {
             printMenu();
             switch (reader.nextLine()) {
                 case ("1"):
                     printAbout();
+                    break;
                 case ("2"):
                     printInstructions();
+                    break;
                 case ("3"):
                     insertMacs();
+                    break;
                 case ("4"):
                     insertChains();
-                case ("5"):
                     break;
+                case ("5"):
+                    break outerloop;
             }
         }
     }
@@ -49,6 +54,8 @@ public class InterfazDeUsuario {
         System.out.println("");
         System.out.println("Source code repo");
         System.out.println("https://github.com/gabrielcamr9/ProyectoLF");
+        System.out.println("Press any key to continue");
+        reader.nextLine();
     }
 
     public void printInstructions() {
@@ -60,6 +67,8 @@ public class InterfazDeUsuario {
         System.out.println("Send all the chains you want to be evaluated in order.");
         System.out.println("Chains need to be sent in Hexadecimal format");
         System.out.println("Send a -1 to finish");
+        System.out.println("Press any key to continue");
+        reader.nextLine();
     }
 
     public void insertMacs() {
