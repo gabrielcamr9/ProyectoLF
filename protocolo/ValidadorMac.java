@@ -12,7 +12,7 @@ public class ValidadorMac {
 		
 		boolean res =  true;
 		for(int i = 0 ; i< 5; i++){
-			AutomataDinamico a1 = AutomataDinamico.readFromFile("./mac1.txt");
+			AutomataDinamico a1 = AutomataDinamico.readFromFile("./src/automatas/mac1.txt");
 			String chunk = mac.substring(0, 3);
 			//System.err.println("evaluando "+ chunk);
 			mac = mac.substring(3);
@@ -22,7 +22,7 @@ public class ValidadorMac {
 				break;
 		}
 		
-		AutomataDinamico a2 = AutomataDinamico.readFromFile("./mac2.txt");
+		AutomataDinamico a2 = AutomataDinamico.readFromFile("./src/automatas/mac2.txt");
 		
 		//System.err.println("Evaluado " + mac);
 		if(res){
