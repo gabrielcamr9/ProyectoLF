@@ -1,6 +1,8 @@
 
 import java.util.Scanner;
 
+import protocolo.ValidadorMac;
+
 public class InterfazDeUsuario {
 
     private Scanner reader;
@@ -12,7 +14,7 @@ public class InterfazDeUsuario {
     }
 
     //Este método se encarga de manejar la lógica detrás de la interfaz de usuario
-    public void start() {
+    public void start() throws Exception {
         outerloop:
         while (true) {
             printMenu();
@@ -71,19 +73,31 @@ public class InterfazDeUsuario {
         reader.nextLine();
     }
 
-    public void insertMacs() {
-        String mac = reader.nextLine();
+    public void insertMacs() throws Exception {
+        System.out.println("Ingresa las macs");
+        String mac = "";
         while (!mac.equals("-1")) {
-            ah.addMac(mac);
-            mac = reader.nextLine();
+            System.out.println("Ingresa la MAC, o -1 para salir");
+
+        	mac = reader.nextLine();
+        	
+        	if(mac.equals("-1"))
+        		break;
+        	
+        	if(ValidadorMac.isValidMac(mac))
+        		ah.addMac(mac);
+        	else
+        		System.out.println("Esa mac no fue valida, comprueba el formato");
         }
     }
 
     public void insertChains() {
-        String chain = reader.nextLine();
+        String chain = "*";
         while (!chain.equals("-1")) {
-            ah.addChain(chain);
+        	System.out.println("Ingresa las cadenas hexadecimales a validar");
             chain = reader.nextLine();
+            if(!chain.equals("-1"))
+            	ah.addChain(chain);
         }
         ah.evaluateAll();
     }

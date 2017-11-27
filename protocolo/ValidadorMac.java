@@ -9,8 +9,12 @@ import automatas.Estado;
 public class ValidadorMac {
 	
 	public static boolean isValidMac(String mac) throws Exception{
+		if(mac.length() < 17)
+			return false;
 		
 		boolean res =  true;
+		
+		mac = mac.toUpperCase();
 		for(int i = 0 ; i< 5; i++){
 			AutomataDinamico a1 = AutomataDinamico.readFromFile("./src/automatas/mac1.txt");
 			String chunk = mac.substring(0, 3);
@@ -36,27 +40,23 @@ public class ValidadorMac {
 	public static AutomataDinamico buildAutomataForMac(String mac){
 		AutomataDinamico generado = new AutomataDinamico();
 		String macUpper =  mac.toUpperCase().replaceAll(":", "");
-		macUpper.chars().forEach(c -> generado.alfabeto.add((char) c));
+		macUpper.chars().forEach(c -> generado.agregarSimbolo((char) c));
 		
-		generado.listaEstados.add(new Estado("q0"));
+		generado.agregarEstado(new Estado("q0"));
 		macUpper.chars().forEach(c -> {
-			System.err.println("Creando estado q" + generado.listaEstados.size());
-			Estado e = new Estado("q"+ generado.listaEstados.size());
-			generado.listaEstados.add(e);
+			//System.err.println("Creando estado q" + generado.getEstadosCount());
+			Estado e = new Estado("q"+ generado.getEstadosCount());
+			generado.agregarEstado(e);
 		});
 		
 		IntStream.range(0, 12).forEach(i -> {
-			Estado e = generado.listaEstados.get(i);
-			Estado sig = generado.listaEstados.get(i+1);
+			Estado e = generado.getEstadoWithIndex(i);
+			Estado sig = generado.getEstadoWithIndex(i+1);
 			e.transiciones.put(macUpper.charAt(i), sig);
 		});
 
-		
-		generado.listaEstados.get(0).estado_inicial = true;
-		generado.listaEstados.get(12).estado_final = true;
-		
-		generado.inicial = generado.listaEstados.get(0);
-		generado.finales.add(generado.listaEstados.get(12));
+		generado.setInitial(0);
+		generado.settFinal(12);
 		
 		return generado;
 		
